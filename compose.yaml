@@ -1,0 +1,22 @@
+services:
+  client:
+    build:
+      context: client
+      target: prod
+    ports:
+      - "8080:80"
+    container_name: ovc-client
+    networks:
+      - backend-network
+  server:
+    build:
+      context: server
+    ports:
+      - "3001:3001"
+    container_name: ovc-server
+    networks:
+      - backend-network
+  
+networks:
+  backend-network:
+    driver: bridge

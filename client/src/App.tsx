@@ -2,7 +2,7 @@ function App() {
 
   return (
     <>
-      <p>Hello World!</p>
+      <p>This is the client updated!</p>
     </>
   )
 }

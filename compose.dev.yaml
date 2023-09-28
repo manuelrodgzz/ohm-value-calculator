@@ -1,0 +1,9 @@
+services:
+  client:
+    build:
+      target: dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules # This avoids local node_modules folder to be copied on the server
