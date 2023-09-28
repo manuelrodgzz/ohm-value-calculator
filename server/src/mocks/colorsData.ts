@@ -1,3 +1,5 @@
+import { AllColorsData } from "../types"
+
 const colorsData: AllColorsData = {
   black: {
   	significant: 0,

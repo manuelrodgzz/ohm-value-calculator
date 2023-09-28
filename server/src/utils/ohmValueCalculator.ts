@@ -1,3 +1,6 @@
+import { AllColorsData, Band, Color, Resistor } from "../types"
+import ValidationError from "./validationError"
+
 type ValidataeResistorFn = (
   resistor: Resistor,
   colorsData: AllColorsData
@@ -14,7 +17,7 @@ const validateResistor: ValidataeResistorFn = (resistor, colorsData) => {
   const invalidBand = Object.entries(resistor).find(
     ([band, color]) => {
       const propToCheck = bandMap[band as keyof typeof resistor]
-      colorsData[color][propToCheck] === undefined      
+      return colorsData[color][propToCheck] === undefined      
     }
   )
   
@@ -32,9 +35,10 @@ const validateResistor: ValidataeResistorFn = (resistor, colorsData) => {
 const ohmValueCalculator = (resistor: Resistor, colorsData: AllColorsData): number => {
 
   const invalidBand = validateResistor(resistor, colorsData)
+  console.log('invalid???', invalidBand)
 
   if (invalidBand) {
-    throw new Error(`Band ${invalidBand.bandName} can not use color ${invalidBand.bandColor}`)
+    throw new ValidationError(`Band ${invalidBand.bandName} can not use color ${invalidBand.bandColor}`)
   }
 
   const { bandA, bandB, bandC } = resistor
