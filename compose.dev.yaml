@@ -7,3 +7,9 @@ services:
     volumes:
       - ./client:/app
       - /app/node_modules # This avoids local node_modules folder to be copied on the server
+  server:
+    build:
+      target: dev
+    volumes:
+      - ./server:/app
+      - /app/node_modules # This avoids local node_modules folder to be copied on the server
