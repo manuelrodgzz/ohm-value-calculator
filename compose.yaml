@@ -8,9 +8,10 @@ services:
     container_name: ovc-client
     networks:
       - backend-network
+
   server:
     build:
-      context: server
+      dockerfile: ./server/Dockerfile
       target: prod
     ports:
       - "3001:3001"

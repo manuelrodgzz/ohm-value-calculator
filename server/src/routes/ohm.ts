@@ -1,7 +1,7 @@
 import express, { Request, RequestHandler } from 'express'
 import colorsData from '../mocks/colorsData'
 import ohmValueCalculator from '../utils/ohmValueCalculator'
-import { COLORS_ARRAY, Resistor } from '../types'
+import { COLORS_ARRAY, Resistor } from 'common'
 import ValidationError from '../utils/validationError'
 
 const router = express.Router()

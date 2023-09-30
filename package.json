@@ -1,0 +1,5 @@
+{
+  "name": "ohm-value-calculator",
+  "private": true,
+  "workspaces": ["*"]
+}

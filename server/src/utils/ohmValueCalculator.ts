@@ -1,4 +1,4 @@
-import { AllColorsData, Band, Color, Resistor } from "../types"
+import { AllColorsData, Band, Color, Resistor } from "common"
 import ValidationError from "./validationError"
 
 type ValidataeResistorFn = (

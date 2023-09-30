@@ -1,4 +1,4 @@
-import { AllColorsData } from "common"
+import { AllColorsData } from "../types"
 
 const colorsData: AllColorsData = {
   black: {

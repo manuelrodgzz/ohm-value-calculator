@@ -1,5 +1,4 @@
-*/yarn.lock
-*/node_modules
+**/node_modules
 
 # Logs
 */logs
@@ -26,3 +25,5 @@
 */*.sw?
 
 *.env
+
+database/mongo*.txt
