@@ -19,6 +19,36 @@ services:
     networks:
       - backend-network
   
+  db:
+    build:
+      dockerfile: ./database/Dockerfile
+    ports:
+      - 27017:27017
+    container_name: ovc-db
+    networks:
+      - backend-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME_FILE: /run/secrets/mongo_root_user
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongo_root_pass
+      MONGO_CLIENT_USER_FILE: /run/secrets/mongo_client_user
+      MONGO_CLIENT_PASSWORD_FILE: /run/secrets/mongo_client_pass
+      MONGO_INITDB_DATABASE: ohm-db
+    secrets:
+      - mongo_root_user
+      - mongo_root_pass
+      - mongo_client_user
+      - mongo_client_pass
+  
 networks:
   backend-network:
     driver: bridge
+
+secrets:
+  mongo_root_user:
+    file: ./database/mongo_root_user.txt
+  mongo_root_pass:
+    file: ./database/mongo_root_pass.txt
+  mongo_client_user:
+    file: ./database/mongo_client_user.txt
+  mongo_client_pass:
+    file: ./database/mongo_client_pass.txt
