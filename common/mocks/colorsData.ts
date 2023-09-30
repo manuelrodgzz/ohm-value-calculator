@@ -1,6 +1,6 @@
 import { AllColorsData } from "../types"
 
-const colorsData: AllColorsData = {
+export const colorsData: AllColorsData = {
   black: {
   	significant: 0,
     multiplier: 1
@@ -64,5 +64,3 @@ const colorsData: AllColorsData = {
     tolerancePercentage: 0.2
   }
 }
-
-export default colorsData

@@ -35,7 +35,6 @@ const validateResistor: ValidataeResistorFn = (resistor, colorsData) => {
 const ohmValueCalculator = (resistor: Resistor, colorsData: AllColorsData): number => {
 
   const invalidBand = validateResistor(resistor, colorsData)
-  console.log('invalid???', invalidBand)
 
   if (invalidBand) {
     throw new ValidationError(`Band ${invalidBand.bandName} can not use color ${invalidBand.bandColor}`)

@@ -1,5 +1,5 @@
 import express, { Request, RequestHandler } from 'express'
-import colorsData from '../mocks/colorsData'
+import { colorsData } from 'common'
 import ohmValueCalculator from '../utils/ohmValueCalculator'
 import { COLORS_ARRAY, Resistor } from 'common'
 import ValidationError from '../utils/validationError'
@@ -20,11 +20,11 @@ const validateParams: RequestHandler<{}, {}, {}, Query> = (req, res, next) => {
   if ([bandA, bandB, bandC].every(color => COLORS_ARRAY.includes(color as any))) {
     // And D was omitted OR is a valid color
     if (bandD === undefined || COLORS_ARRAY.includes(bandD as any)) {
-      next()
+      return next()
     }
   }
 
-  res.status(400).json({error: 'Missing parameters or invalid parameter values.'})
+  return res.status(400).json({error: 'Missing parameters or invalid parameter values.'})
 }
 
 router.get('/ohm', validateParams, (req: Request<{}, {}, {}, Resistor>, res) => {
@@ -41,7 +41,7 @@ router.get('/ohm', validateParams, (req: Request<{}, {}, {}, Resistor>, res) => 
       colorsData
     )
     
-    res.json({
+    return res.json({
       ohms
     })
   } catch(error) {
@@ -51,7 +51,7 @@ router.get('/ohm', validateParams, (req: Request<{}, {}, {}, Resistor>, res) => 
       message = error.message
     }
 
-    res.status(message ? 400 : 500).json({
+    return res.status(message ? 400 : 500).json({
       error: message || 'Unknown error.'
     })
   }
