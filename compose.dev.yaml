@@ -6,11 +6,9 @@ services:
       - "5173:5173"
     volumes:
       - ./client:/app
-      - /app/node_modules # This avoids local node_modules folder to be copied on the server
   server:
     build:
       target: dev
     volumes:
       - ./server:/app/server
       - ./common:/app/common
-      - /app/node_modules # This avoids local node_modules folder to be copied on the server
