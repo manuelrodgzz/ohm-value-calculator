@@ -5,7 +5,7 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./client:/app
+      - ./client:/app/client
   server:
     build:
       target: dev

@@ -1,7 +1,7 @@
 services:
   client:
     build:
-      context: client
+      dockerfile: ./client/Dockerfile
       target: prod
     ports:
       - "8080:80"
