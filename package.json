@@ -1,5 +1,9 @@
 {
   "name": "ohm-value-calculator",
   "private": true,
+  "scripts": {
+    "dev": "docker compose -f compose.yaml -f compose.dev.yaml up --build -V",
+    "start": "docker compose -f compose.yaml up --build"
+  },
   "workspaces": ["*"]
 }
