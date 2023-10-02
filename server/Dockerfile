@@ -1,4 +1,4 @@
-FROM node:16 as base
+FROM node:18 as base
 WORKDIR /app
 COPY ./server ./server
 COPY ./common ./common
@@ -6,7 +6,6 @@ COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 COPY ./tsconfig.json ./tsconfig.json
 RUN yarn install
-RUN ls
 
 FROM base as prod
 RUN yarn workspace server build

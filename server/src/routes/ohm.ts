@@ -1,8 +1,7 @@
 import express, { Request, RequestHandler } from 'express'
-import { colorsData } from 'common'
 import ohmValueCalculator from '../utils/ohmValueCalculator'
-import { COLORS_ARRAY, Resistor } from 'common'
-import ValidationError from '../utils/validationError'
+import { AllColorsData, COLORS_ARRAY, Resistor } from 'common'
+import getColorCodes from '../utils/getColorCodes'
 
 const router = express.Router()
 
@@ -27,10 +26,17 @@ const validateParams: RequestHandler<{}, {}, {}, Query> = (req, res, next) => {
   return res.status(400).json({error: 'Missing parameters or invalid parameter values.'})
 }
 
-router.get('/ohm', validateParams, (req: Request<{}, {}, {}, Resistor>, res) => {
+router.get('/ohm', validateParams, async (req: Request<{}, {}, {}, Resistor>, res) => {
   const { bandA, bandB, bandC, bandD = 'none' } = req.query
 
   try {
+    const colorCodes = await getColorCodes()
+    const colorsData = Object.fromEntries(
+      colorCodes.map(
+        ({color, _id, ...colorData}) => [color, colorData]
+      )
+    ) as AllColorsData
+
     const ohms = ohmValueCalculator(
       {
         bandA,
@@ -47,7 +53,7 @@ router.get('/ohm', validateParams, (req: Request<{}, {}, {}, Resistor>, res) => 
   } catch(error) {
     let message: string | null = null
 
-    if (error instanceof ValidationError) {
+    if (error instanceof Error) {
       message = error.message
     }
 

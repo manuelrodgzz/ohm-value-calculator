@@ -31,3 +31,10 @@ export type Band = {
 }
 
 export type AllColorsData = Record<Color, Band>
+
+export type ColorCodeCollectionSchema = {
+  color: Color
+  significant?: number
+  multiplier?: number
+  tolerancePercentage?: number
+}

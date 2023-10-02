@@ -1,1 +1,1 @@
-docker compose -f compose.yaml up client --build
+docker compose -f compose.yaml up --build

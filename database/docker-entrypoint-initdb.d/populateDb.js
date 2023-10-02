@@ -113,8 +113,8 @@ const res = db.createUser(
   },
 )
 
-db.createCollection('colorCode')
+db.createCollection('colorCodes')
 
 console.log('===== Populating DB ====')
-db.colorCode.insertMany(DOCUMENTS)
+db.colorCodes.insertMany(DOCUMENTS)
 console.log('===== DB population finished ====')
