@@ -1,5 +1,5 @@
 import { AllColorsData, Band, Color, Resistor } from "common"
-import ValidationError from "./errors/validation"
+import ValidationError from "../errors/validation"
 
 type ValidataeResistorFn = (
   resistor: Resistor,
