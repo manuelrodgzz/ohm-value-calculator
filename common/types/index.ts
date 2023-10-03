@@ -30,7 +30,7 @@ export type Band = {
   tolerancePercentage?: number
 }
 
-export type AllColorsData = Record<Color, Band>
+export type ColorsData = Partial<Record<Color, Band>>
 
 export type ColorCodeCollectionSchema = {
   color: Color

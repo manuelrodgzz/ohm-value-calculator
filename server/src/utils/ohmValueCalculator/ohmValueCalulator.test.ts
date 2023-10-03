@@ -1,4 +1,4 @@
-import { Band, Color, colorsData } from 'common'
+import { Color, colorsData } from 'common'
 import ohmValueCalculator from '.'
 import ValidationError from '../errors/validation'
 

@@ -1,6 +1,6 @@
 import express, { Request, RequestHandler } from 'express'
 import ohmValueCalculator from '../utils/ohmValueCalculator'
-import { AllColorsData, COLORS_ARRAY, Resistor } from 'common'
+import { ColorsData, COLORS_ARRAY, Resistor } from 'common'
 import getColorCodes from '../utils/getColorCodes'
 
 const router = express.Router()
@@ -30,12 +30,12 @@ router.get('/ohm', validateParams, async (req: Request<{}, {}, {}, Resistor>, re
   const { bandA, bandB, bandC, bandD = 'none' } = req.query
 
   try {
-    const colorCodes = await getColorCodes()
-    const colorsData = Object.fromEntries(
+    const colorCodes = await getColorCodes(bandA, bandB, bandC, bandD)
+    const colorsData: ColorsData = Object.fromEntries(
       colorCodes.map(
         ({color, _id, ...colorData}) => [color, colorData]
       )
-    ) as AllColorsData
+    )
 
     const ohms = ohmValueCalculator(
       {

@@ -1,7 +1,7 @@
 import { MongoClient, Db, WithId } from 'mongodb'
 import fs from 'fs'
 import DbError from './errors/db'
-import { ColorCodeCollectionSchema } from 'common'
+import { Color, ColorCodeCollectionSchema } from 'common'
 
 const userSecretPath = '/run/secrets/mongo_client_user'
 const passSecretPath = '/run/secrets/mongo_client_pass'
@@ -42,14 +42,15 @@ const connectToDb = async (): Promise<Db> => {
     throw new DbError('Database authentication failed.')
   }
 }
-type Test = {
-  name: string
-}
-const getColorCodes = async (): Promise<WithId<ColorCodeCollectionSchema>[]> => {
+
+const getColorCodes = async (color1: Color, color2: Color, color3: Color, color4: Color): Promise<WithId<ColorCodeCollectionSchema>[]> => {
   const ohmDb = await connectToDb()
 
   const collection = ohmDb.collection<ColorCodeCollectionSchema>('colorCodes')
-  return collection.find().toArray()
+  return collection.find({
+    $or: [{ color: color1 }, { color: color2 }, { color: color3 }, { color: color4 }]
+  })
+  .toArray()
 }
 
 export default getColorCodes

@@ -1,9 +1,9 @@
-import { AllColorsData, Band, Color, Resistor } from "common"
+import { ColorsData, Band, Color, Resistor } from "common"
 import ValidationError from "../errors/validation"
 
 type ValidataeResistorFn = (
   resistor: Resistor,
-  colorsData: AllColorsData
+  colorsData: ColorsData
 ) => { bandName: string, bandColor: Color } | false
 
 const bandMap: Record<keyof Resistor, keyof Band> = {
@@ -17,7 +17,7 @@ const validateResistor: ValidataeResistorFn = (resistor, colorsData) => {
   const invalidBand = Object.entries(resistor).find(
     ([band, color]) => {
       const propToCheck = bandMap[band as keyof typeof resistor]
-      return colorsData[color][propToCheck] === undefined      
+      return (colorsData[color] as Band)[propToCheck] === undefined      
     }
   )
   
@@ -32,18 +32,34 @@ const validateResistor: ValidataeResistorFn = (resistor, colorsData) => {
   return false
 }
 
-const ohmValueCalculator = (resistor: Resistor, colorsData: AllColorsData): number => {
+const checkIfMissingColorsData = (resistor: Resistor, colorsData: ColorsData): Color | false => {
+  for (const band of Object.values(resistor)) {
+    if (!(band in colorsData)) {
+      return band
+    }
+  }
+
+  return false
+}
+
+const ohmValueCalculator = (resistor: Resistor, colorsData: ColorsData): number => {
+
+  const missingColor = checkIfMissingColorsData(resistor, colorsData)
+
+  if (missingColor) {
+    throw new ValidationError(`Color ${missingColor} was not retrieved from the DB.`)
+  }
 
   const invalidBand = validateResistor(resistor, colorsData)
 
   if (invalidBand) {
-    throw new ValidationError(`Band ${invalidBand.bandName} can not use color ${invalidBand.bandColor}`)
+    throw new ValidationError(`Band ${invalidBand.bandName} can not use color ${invalidBand.bandColor}.`)
   }
 
   const { bandA, bandB, bandC } = resistor
-  const significant1 = colorsData[bandA].significant
-  const significant2 = colorsData[bandB].significant
-  const multiplier = colorsData[bandC].multiplier as number
+  const significant1 = (colorsData[bandA] as Band).significant
+  const significant2 = (colorsData[bandB] as Band).significant
+  const multiplier = (colorsData[bandC] as Band).multiplier as number
 
   return Number(`${significant1}${significant2}`) * multiplier
 }

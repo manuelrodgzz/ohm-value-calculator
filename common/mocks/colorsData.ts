@@ -1,6 +1,6 @@
-import { AllColorsData } from "../types"
+import { ColorsData } from "../types"
 
-export const colorsData: AllColorsData = {
+export const colorsData: Required<ColorsData> = {
   black: {
   	significant: 0,
     multiplier: 1
