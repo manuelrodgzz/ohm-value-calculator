@@ -8,6 +8,8 @@ services:
     container_name: ovc-client
     networks:
       - backend-network
+    depends_on:
+      - server
 
   server:
     build:
@@ -23,6 +25,8 @@ services:
     secrets:
       - mongo_client_user
       - mongo_client_pass
+    depends_on:
+      - db
   
   db:
     build:
