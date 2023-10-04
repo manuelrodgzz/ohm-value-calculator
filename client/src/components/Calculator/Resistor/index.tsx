@@ -1,33 +1,29 @@
 import { FC } from 'react'
 import styles from './styles.module.css'
-import { Color } from 'common'
+import { Color, Resistor as ResistorType } from 'common'
 
 type BandProps = {
-  onBandChange: (index: number) => void
-  index: number
   color?: Color
 }
 
-type ResistorProps = {
-  onBandChange: Pick<BandProps, 'onBandChange'>['onBandChange']
-  bands: Color[]
-}
+type ResistorProps = ResistorType
 
-const Band: FC<BandProps> = ({ onBandChange, color = 'none', index }) => (
-  <button
+const Band: FC<BandProps> = ({color = 'none'}) => (
+  <div
     style={{backgroundColor: color === 'none' ? 'transparent' : color}}
     className={styles.band}
   />
 )
 
-const Resistor: FC<ResistorProps> = ({ bands, onBandChange }) => {
+const Resistor: FC<ResistorProps> = ({ bandA, bandB, bandC, bandD }) => {
 
   return (
     <div className={styles.container}>
       <div className={styles.resistor}>
-        {
-          bands.map((band, i) => <Band key={`band-${i}`} onBandChange={onBandChange} index={i} color={ band }/>)
-        }
+        <Band color={ bandA }/>
+        <Band color={ bandB }/>
+        <Band color={ bandC }/>
+        <Band color={ bandD }/>
       </div>
     </div>
   )

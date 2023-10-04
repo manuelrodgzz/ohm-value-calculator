@@ -1,19 +1,27 @@
 import { FC, useState } from 'react'
 import Resistor from './Resistor'
-import { Color } from 'common'
-
-const INITIAL_STATE: Color[] = ['none', 'brown', 'orange', 'yellow']
+import { Color, Resistor as ResistorType} from 'common'
+import Form from './Form'
 
 const Calculator: FC = () => {
-  const [bands, setBands] = useState<Color[]>(INITIAL_STATE)
+  const [resistor, setResistor] = useState<ResistorType>({
+    bandA: 'red',
+    bandB: 'brown',
+    bandC: 'orange',
+    bandD: 'yellow'
+  })
 
-  const handleBandClick = (bandIndex: number) => {
-    // setBands(bands => bands.map((band, i) => ))
+  const handleFormChange = (band: keyof ResistorType, color: Color) => {
+    setResistor(prev => ({
+      ...prev,
+      [band]: color
+    }))
   }
 
   return (
     <section>
-      <Resistor bands={bands} onBandClick={handleBandClick}/>
+      <Resistor {...resistor}/>
+      <Form resistor={resistor} onChange={handleFormChange}/>
     </section>
   )
 }
