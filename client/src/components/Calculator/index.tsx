@@ -31,39 +31,60 @@ const Section = styled.section`
   }
 `
 
+type State = {
+  resistor: ResistorType
+  result: number | null
+  error: string | null
+  fetching: boolean
+}
+
 const Calculator: FC = () => {
-  const [resistor, setResistor] = useState<ResistorType>({
-    bandA: 'red',
-    bandB: 'brown',
-    bandC: 'orange',
-    bandD: 'yellow'
+  const [state, setState] = useState<State>({
+    resistor: {
+      bandA: 'red',
+      bandB: 'brown',
+      bandC: 'orange',
+      bandD: 'yellow'
+    },
+    result: null,
+    error: null,
+    fetching: false
   })
 
-  const [result, setResult] = useState<number | null>()
-  const [error, setError] = useState<string | null>()
-
   const handleFormChange = (band: keyof ResistorType, color: Color) => {
-    setResistor(prev => ({
+    setState(({resistor, ...prev}) => ({
       ...prev,
-      [band]: color
+      resistor: {
+        ...resistor,
+        [band]: color
+      }
     }))
   }
 
   const handleSubmit = async () => {
     try {
-      const searchParams = new URLSearchParams(resistor).toString()
+      const searchParams = new URLSearchParams(state.resistor).toString()
       const res = await fetch(`http://localhost:3001/api/ohm?${searchParams}`).then(r => r.json()) as OhmApiResponse | ApiError
 
       if (typeguard<ApiError>(res, 'error')) {
-        setResult(null)
-        setError(res.error)
+        setState(prev => ({
+          ...prev,
+          result: null,
+          error: res.error
+        }))
         return
       }
 
-      setResult(res.ohms)
-      setError(null)
+      setState(prev => ({
+        ...prev,
+        result: res.ohms,
+        error: null
+      }))
     } catch(e) {
-      setError('Something went wrong while trying to get the result from the API')
+      setState(prev => ({
+        ...prev,
+        error: 'Something went wrong while trying to get the result from the API'
+      }))
     }
   }
 
@@ -72,17 +93,17 @@ const Calculator: FC = () => {
       <div className='container'>
 
         <div className='left'>
-          <Resistor {...resistor}/>
+          <Resistor {...state.resistor}/>
 
           <Form
-            resistor={resistor}
+            resistor={state.resistor}
             onChange={handleFormChange}
             onSubmit={handleSubmit}
           />
         </div>
 
         <div className='right'>
-          <Result error={error} result={result}/>
+          <Result error={state.error} result={state.result}/>
         </div>        
       </div>
     </Section>
