@@ -1,11 +1,20 @@
 import Calculator from "./components/Calculator"
+import Header from "./components/Header"
+import styled from '@emotion/styled'
+
+const Main = styled.main`
+  flex: 1;
+`
 
 function App() {
 
   return (
-    <main>
-      <Calculator />
-    </main>
+    <>
+      <Header />
+      <Main>
+        <Calculator />
+      </Main>
+    </>
   )
 }
 
