@@ -1,10 +1,10 @@
 /** This class will be helpful to easily differentiate between
  * NodeJS errors and our custom errors
  */
-class Custom extends Error {
+class CustomError extends Error {
   constructor(message: string) {
     super(message)
   }
 }
 
-export default Custom
+export default CustomError

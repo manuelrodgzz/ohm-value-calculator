@@ -1,7 +1,9 @@
 import express, { Request, RequestHandler } from 'express'
 import ohmValueCalculator from '../utils/ohmValueCalculator'
 import { ColorsData, COLORS_ARRAY, Resistor } from 'common'
-import getColorCodes from '../utils/getColorCodes'
+import Db from '../utils/db'
+import CustomError from '../utils/errors/custom'
+import ValidationError from '../utils/errors/validation'
 
 const router = express.Router()
 
@@ -30,7 +32,7 @@ router.get('/ohm', validateParams, async (req: Request<{}, {}, {}, Resistor>, re
   const { bandA, bandB, bandC, bandD = 'none' } = req.query
 
   try {
-    const colorCodes = await getColorCodes(bandA, bandB, bandC, bandD)
+    const colorCodes = await Db.getColorCodes(bandA, bandB, bandC, bandD)
     const colorsData: ColorsData = Object.fromEntries(
       colorCodes.map(
         ({color, _id, ...colorData}) => [color, colorData]
@@ -53,11 +55,13 @@ router.get('/ohm', validateParams, async (req: Request<{}, {}, {}, Resistor>, re
   } catch(error) {
     let message: string | null = null
 
-    if (error instanceof Error) {
+    if (error instanceof CustomError) {
       message = error.message
+    } else {
+      console.error(error)
     }
 
-    return res.status(message ? 400 : 500).json({
+    return res.status(error instanceof ValidationError ? 400 : 500).json({
       error: message || 'Unknown error.'
     })
   }

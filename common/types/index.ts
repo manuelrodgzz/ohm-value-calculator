@@ -38,3 +38,5 @@ export type ColorCodeCollectionSchema = {
   multiplier?: number
   tolerancePercentage?: number
 }
+
+export type GroupedColors = Record<keyof Band, Color[]>
