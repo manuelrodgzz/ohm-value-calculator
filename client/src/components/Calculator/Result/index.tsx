@@ -1,11 +1,13 @@
 import { FC } from 'react'
 import styled from '@emotion/styled'
+import Alert from '@mui/material/Alert'
 
 type Props = {
-  result?: number
+  result?: number | null
+  error?: string | null
 }
 
-const formatNumber = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format
+const formatNumber = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format
 
 const Div = styled.div`
   height: 100%;
@@ -16,6 +18,8 @@ const Div = styled.div`
 
   .result {
     display: flex;
+    margin-bottom: 1rem;
+
     .number-container {
       text-align: end;
       min-width: 10rem;
@@ -26,7 +30,7 @@ const Div = styled.div`
   }
 `
 
-const Result: FC<Props> = ({result}) => {
+const Result: FC<Props> = ({result, error}) => {
 
   return (
     <Div>
@@ -37,6 +41,7 @@ const Result: FC<Props> = ({result}) => {
         </div>
         <p><i>Ohms</i></p>
       </div>
+      { error && <Alert severity='error'><strong>Error:&nbsp;</strong>{ error }</Alert> }
     </Div>
   )
 }

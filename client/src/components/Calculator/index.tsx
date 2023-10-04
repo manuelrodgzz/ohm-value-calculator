@@ -39,7 +39,8 @@ const Calculator: FC = () => {
     bandD: 'yellow'
   })
 
-  const [result, setResult] = useState<number>()
+  const [result, setResult] = useState<number | null>()
+  const [error, setError] = useState<string | null>()
 
   const handleFormChange = (band: keyof ResistorType, color: Color) => {
     setResistor(prev => ({
@@ -52,14 +53,17 @@ const Calculator: FC = () => {
     try {
       const searchParams = new URLSearchParams(resistor).toString()
       const res = await fetch(`http://localhost:3001/api/ohm?${searchParams}`).then(r => r.json()) as OhmApiResponse | ApiError
-      
+
       if (typeguard<ApiError>(res, 'error')) {
+        setResult(null)
+        setError(res.error)
         return
       }
 
       setResult(res.ohms)
+      setError(null)
     } catch(e) {
-      console.error('Something went wrong while trying to get the result from the API')
+      setError('Something went wrong while trying to get the result from the API')
     }
   }
 
@@ -78,7 +82,7 @@ const Calculator: FC = () => {
         </div>
 
         <div className='right'>
-          <Result result={result}/>
+          <Result error={error} result={result}/>
         </div>        
       </div>
     </Section>
