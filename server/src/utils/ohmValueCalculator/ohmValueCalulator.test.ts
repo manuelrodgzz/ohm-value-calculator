@@ -22,7 +22,7 @@ const fourBandScenarios: Test[] = [
     args: ['red', 'green', 'orange', 'gold'],
   },
   {
-    args: ['green', 'blue', 'orange', 'gold'],
+    args: ['green', 'blue', 'yellow', 'gold'],
   },
   {
     args: ['yellow', 'violet', 'brown', 'gold'],
@@ -40,13 +40,13 @@ const fourBandScenarios: Test[] = [
     args: ['violet', 'white', 'silver', 'red'],
   },
   {
-    args: ['orange', 'red', 'green', 'blue'],
+    args: ['orange', 'yellow', 'green', 'blue'],
   },
   {
-    args: ['grey', 'violet', 'green', 'yellow'],
+    args: ['grey', 'brown', 'blue', 'yellow'],
   },
   {
-    args: ['white', 'orange', 'green', 'brown'],
+    args: ['white', 'orange', 'violet', 'brown'],
   },
   {
     args: ['grey', 'grey', 'grey', 'grey'],
