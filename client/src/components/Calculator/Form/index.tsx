@@ -9,7 +9,7 @@ import styled from '@emotion/styled'
 const StyledForm = styled.form`
   padding: 2rem 0;
   max-width: 30rem;
-  margin: auto;
+  margin: 0 auto;
 
   & label {
     margin-right: 1rem;
@@ -28,6 +28,7 @@ type ColorsDropdownProps = {
 type FormProps = {
   resistor: Resistor
   onChange: (band: keyof Resistor, color: Color) => void
+  onSubmit: () => void
 }
 
 const ColorsDropdown: FC<ColorsDropdownProps> = ({ colorGroup, groupedColors, name, onChange, label, value }) => {
@@ -45,11 +46,12 @@ const ColorsDropdown: FC<ColorsDropdownProps> = ({ colorGroup, groupedColors, na
   )
 }
 
-const Form: FC<FormProps> = ({resistor, onChange }) => {
+const Form: FC<FormProps> = ({resistor, onChange, onSubmit }) => {
   const [groupedColors, setGroupedColors] = useState<GroupedColors>()
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    onSubmit()
   }
 
   useEffect(() => {
@@ -87,7 +89,7 @@ const Form: FC<FormProps> = ({resistor, onChange }) => {
           ))
         }
         <Grid item xs={12} display='flex' justifyContent='center'>
-          <Button variant='contained'>Calculate</Button>
+          <Button type='submit' variant='contained'>Calculate</Button>
         </Grid>
       </Grid>
     </StyledForm>

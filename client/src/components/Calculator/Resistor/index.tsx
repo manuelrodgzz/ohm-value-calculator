@@ -29,10 +29,6 @@ const ResistorWrapper = styled.div`
       border-top: none;
       border-bottom: none;
       width: 1rem;
-
-      &:hover {
-        cursor: pointer;
-      }
     }
   }
 `
