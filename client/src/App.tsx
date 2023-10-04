@@ -1,8 +1,10 @@
+import Calculator from "./components/Calculator"
+
 function App() {
 
   return (
     <>
-      <p>This is the client updated!!!!!</p>
+      <Calculator />
     </>
   )
 }
