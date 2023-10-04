@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 
 const StyledHeader = styled.header`
   height: 5rem;
-  background-color: #95cdff;
   display: flex;
   align-items: center;
   justify-content: center;
