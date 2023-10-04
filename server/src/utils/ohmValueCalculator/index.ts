@@ -1,4 +1,4 @@
-import { ColorsData, Band, Color, Resistor } from "common"
+import { ColorsData, Band, Color, Resistor, bandTypeMap } from "common"
 import ValidationError from "../errors/validation"
 
 type ValidataeResistorFn = (
@@ -6,17 +6,10 @@ type ValidataeResistorFn = (
   colorsData: ColorsData
 ) => { bandName: string, bandColor: Color } | false
 
-const bandMap: Record<keyof Resistor, keyof Band> = {
-  bandA: 'significant',
-  bandB: 'significant',
-  bandC: 'multiplier',
-  bandD: 'tolerancePercentage'
-}
-
 const validateResistor: ValidataeResistorFn = (resistor, colorsData) => {
   const invalidBand = Object.entries(resistor).find(
     ([band, color]) => {
-      const propToCheck = bandMap[band as keyof typeof resistor]
+      const propToCheck = bandTypeMap[band as keyof typeof resistor]
       return (colorsData[color] as Band)[propToCheck] === undefined      
     }
   )
