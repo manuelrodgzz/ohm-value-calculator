@@ -40,3 +40,6 @@ export type ColorCodeCollectionSchema = {
 }
 
 export type GroupedColors = Record<keyof Band, Color[]>
+
+export type OhmApiResponse = { ohms: number }
+export type ApiError = { error: string }

@@ -1,11 +1,11 @@
-import express from 'express'
+import express, { Response } from 'express'
 import Db from '../utils/db'
-import { GroupedColors } from 'common'
+import { ApiError, GroupedColors } from 'common'
 import CustomError from '../utils/errors/custom'
 
 const router = express.Router()
 
-router.get('/colors', async (req,res) => {
+router.get('/colors', async (req,res: Response<GroupedColors | ApiError>) => {
   try {
     const colorCodes = await Db.getColorCodes()
     const groupedColors: GroupedColors = {
@@ -39,7 +39,7 @@ router.get('/colors', async (req,res) => {
     }
 
     return res.status(500).json({
-      message: message || 'Unknown error.'
+      error: message || 'Unknown error.'
     })
   }
 })
