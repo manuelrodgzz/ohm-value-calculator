@@ -20,8 +20,10 @@ const Calculator: FC = () => {
 
   return (
     <section>
-      <Resistor {...resistor}/>
-      <Form resistor={resistor} onChange={handleFormChange}/>
+      <div className='container'>
+        <Resistor {...resistor}/>
+        <Form resistor={resistor} onChange={handleFormChange}/>
+      </div>
     </section>
   )
 }

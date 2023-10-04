@@ -1,5 +1,20 @@
 import { Color, GroupedColors, Resistor, bandTypeMap } from 'common'
-import { FC, useEffect, useState } from 'react'
+import { FC, FormEvent, useEffect, useState } from 'react'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import styled from '@emotion/styled'
+
+const StyledForm = styled.form`
+  padding: 2rem 0;
+  max-width: 30rem;
+  margin: auto;
+
+  & label {
+    margin-right: 1rem;
+  }
+`
 
 type ColorsDropdownProps = {
   colorGroup: keyof GroupedColors
@@ -17,21 +32,25 @@ type FormProps = {
 
 const ColorsDropdown: FC<ColorsDropdownProps> = ({ colorGroup, groupedColors, name, onChange, label, value }) => {
   return (
-    <>
+    <div>
       <label htmlFor={name}>{label}</label>
-      <select name={name} onChange={(e) => onChange(name, e.target.value as Color)} value={value}>
+      <Select id={name} onChange={(e) => onChange(name, e.target.value as Color)} value={value}>
         {
           groupedColors && groupedColors[colorGroup].map((color, i) => (
-            <option key={`${name}-${i}`} value={ color }>{ color }</option>
+            <MenuItem key={`${name}-${i}`} value={ color }>{ color }</MenuItem>
           ))
         }
-      </select>
-    </>
+      </Select>
+    </div>
   )
 }
 
 const Form: FC<FormProps> = ({resistor, onChange }) => {
   const [groupedColors, setGroupedColors] = useState<GroupedColors>()
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  }
 
   useEffect(() => {
     const getGroupedColors = async ( ) => {
@@ -47,23 +66,31 @@ const Form: FC<FormProps> = ({resistor, onChange }) => {
   }, [])
 
   return (
-    <form>
-      {
-        Object.entries(resistor).map(([band, color], i) => (
-          <ColorsDropdown
-            key={`dropdown-${band}-${i}`}
-            name={ band as keyof typeof resistor}
-            label={`Band ${band[band.length - 1]}`}
-            onChange={onChange}
-            groupedColors={groupedColors}
-            value={color}
-            colorGroup={bandTypeMap[band as keyof typeof resistor]}
-          />
-        ))
-      }
-
-      <button>Calculate</button>
-    </form>
+    <StyledForm onSubmit={handleSubmit}>
+      <Grid container rowSpacing={2}>
+        {
+          Object.entries(resistor).map(([band, color], i) => (
+            <Grid
+              key={`dropdown-${band}-${i}`}
+              item
+              xs={6}
+            >
+              <ColorsDropdown
+                name={ band as keyof typeof resistor}
+                label={`Band ${band[band.length - 1]}`}
+                onChange={onChange}
+                groupedColors={groupedColors}
+                value={color}
+                colorGroup={bandTypeMap[band as keyof typeof resistor]}
+              />
+            </Grid>
+          ))
+        }
+        <Grid item xs={12} display='flex' justifyContent='center'>
+          <Button variant='contained'>Calculate</Button>
+        </Grid>
+      </Grid>
+    </StyledForm>
   )
 }
 
