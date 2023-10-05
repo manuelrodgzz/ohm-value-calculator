@@ -4,6 +4,7 @@
 - Node JS: >=18.18.0
 - Docker: >=24.0.0
 - Docker compose: >=2.0.0
+- Yarn: 1.22
 
 You can verify if you have already installed these versions using:
 
@@ -11,12 +12,14 @@ You can verify if you have already installed these versions using:
 node -v
 docker -v
 docker compose version
+yarn -v
 ```
 
 Here you can find the documentations to install these dependencies:
 
 - [Docker](https://docs.docker.com/engine/install/)
 - [Node JS](https://nodejs.org/en/download) or [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) in case you prefer to easily switch between node versions
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install)
 
 ## Before running the project
 You will find a file called `.env.example` which contains all the required environment variables. You have to create a `.env` file in the root of the project containing these variables (you can assign whatever value you want).
