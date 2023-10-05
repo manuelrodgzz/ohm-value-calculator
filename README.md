@@ -33,3 +33,28 @@ In these files you must add the usernames and passwords that will be assigned to
 echo 'my_user' > ./database/mongo_root_user.txt
 echo 'Sup3rS3cr37Pa55w0rd' > ./database/mongo_root_pass.txt
 ```
+
+## Run development mode
+```shell
+yarn dev
+```
+
+Services will run on the following ports:
+- React: http://localhost:5173/
+- Express API: http://localhost:3001/
+- DB: http://localhost:27017/
+
+## Run production mode
+```shell
+yarn start
+```
+
+Services will run on the following ports:
+- React: http://localhost:8080/
+- Express API: http://localhost:3001/
+- DB: http://localhost:27017/
+
+## Run tests
+```shell
+yarn workspace server test
+```
