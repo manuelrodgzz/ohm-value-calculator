@@ -35,7 +35,6 @@ type State = {
   resistor: ResistorType
   result: number | null
   error: string | null
-  fetching: boolean
 }
 
 const Calculator: FC = () => {
@@ -48,8 +47,9 @@ const Calculator: FC = () => {
     },
     result: null,
     error: null,
-    fetching: false
   })
+
+  const [isFetching, setIsFetching] = useState(false)
 
   const handleFormChange = (band: keyof ResistorType, color: Color) => {
     setState(({resistor, ...prev}) => ({
@@ -64,8 +64,10 @@ const Calculator: FC = () => {
   const handleSubmit = async () => {
     try {
       const searchParams = new URLSearchParams(state.resistor).toString()
+      
+      setIsFetching(true)
       const res = await fetch(`http://localhost:3001/api/ohm?${searchParams}`).then(r => r.json()) as OhmApiResponse | ApiError
-
+      setIsFetching(false)
       if (typeguard<ApiError>(res, 'error')) {
         setState(prev => ({
           ...prev,
@@ -99,6 +101,7 @@ const Calculator: FC = () => {
             resistor={state.resistor}
             onChange={handleFormChange}
             onSubmit={handleSubmit}
+            isFetching={isFetching}
           />
         </div>
 

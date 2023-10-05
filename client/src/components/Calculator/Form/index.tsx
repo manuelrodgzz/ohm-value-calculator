@@ -27,6 +27,7 @@ type ColorsDropdownProps = {
 
 type FormProps = {
   resistor: Resistor
+  isFetching?:boolean
   onChange: (band: keyof Resistor, color: Color) => void
   onSubmit: () => void
 }
@@ -46,7 +47,7 @@ const ColorsDropdown: FC<ColorsDropdownProps> = ({ colorGroup, groupedColors, na
   )
 }
 
-const Form: FC<FormProps> = ({resistor, onChange, onSubmit }) => {
+const Form: FC<FormProps> = ({resistor, onChange, onSubmit, isFetching }) => {
   const [groupedColors, setGroupedColors] = useState<GroupedColors>()
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -89,7 +90,7 @@ const Form: FC<FormProps> = ({resistor, onChange, onSubmit }) => {
           ))
         }
         <Grid item xs={12} display='flex' justifyContent='center'>
-          <Button type='submit' variant='contained'>Calculate</Button>
+          <Button type='submit' variant='contained' disabled={isFetching}>Calculate</Button>
         </Grid>
       </Grid>
     </StyledForm>
