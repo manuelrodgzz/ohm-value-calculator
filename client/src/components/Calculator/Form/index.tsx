@@ -36,7 +36,7 @@ const ColorsDropdown: FC<ColorsDropdownProps> = ({ colorGroup, groupedColors, na
   return (
     <div>
       <label htmlFor={name}>{label}</label>
-      <Select id={name} onChange={(e) => onChange(name, e.target.value as Color)} value={value}>
+      <Select id={name} name={name} onChange={(e) => onChange(name, e.target.value as Color)} value={ groupedColors ? value : ''}>
         {
           groupedColors && groupedColors[colorGroup].map((color, i) => (
             <MenuItem key={`${name}-${i}`} value={ color }>{ color }</MenuItem>
