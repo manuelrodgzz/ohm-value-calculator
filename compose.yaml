@@ -31,8 +31,6 @@ services:
   db:
     build:
       dockerfile: ./database/Dockerfile
-    ports:
-      - 27017:27017
     container_name: ovc-db
     networks:
       - backend-network
