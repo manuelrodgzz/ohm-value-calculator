@@ -97,8 +97,10 @@ if (!MONGO_INITDB_DATABASE) {
   throw new Error(`Missing env variable: MONGO_INITDB_DATABASE`)
 }
 
-const CLIENT_USER = fs.readFileSync(process.env.MONGO_CLIENT_USER_FILE).toString()
-const CLIENT_PASSWORD = fs.readFileSync(process.env.MONGO_CLIENT_PASSWORD_FILE).toString()
+const linebreaksRegex = new RegExp(/[\r\n]/gm)
+
+const CLIENT_USER = fs.readFileSync(process.env.MONGO_CLIENT_USER_FILE).toString().replace(linebreaksRegex, '')
+const CLIENT_PASSWORD = fs.readFileSync(process.env.MONGO_CLIENT_PASSWORD_FILE).toString().replace(linebreaksRegex, '')
 
 db.getSiblingDB('admin').auth(
   process.env.MONGO_INITDB_ROOT_USERNAME,
