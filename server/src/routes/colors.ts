@@ -15,15 +15,15 @@ router.get('/colors', async (req,res: Response<GroupedColors | ApiError>) => {
     }
 
     colorCodes.forEach(({ color, multiplier, significant, tolerancePercentage }) => {
-      if (multiplier) {
+      if (multiplier !== undefined) {
         groupedColors.multiplier.push(color) 
       }
 
-      if (significant) {
+      if (significant !== undefined) {
         groupedColors.significant.push(color)
       }
 
-      if (tolerancePercentage) {
+      if (tolerancePercentage !== undefined) {
         groupedColors.tolerancePercentage.push(color)
       }
     })

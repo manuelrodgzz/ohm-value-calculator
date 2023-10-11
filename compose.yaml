@@ -45,6 +45,23 @@ services:
       - mongo_root_pass
       - mongo_client_user
       - mongo_client_pass
+
+  server-test:
+    build:
+      dockerfile: ./server/Dockerfile
+      target: dev
+    command: yarn workspace server test
+    container_name: ovc-server-test
+    networks:
+      - backend-network
+    environment:
+      DB_NAME: ${DB_NAME}
+    secrets:
+      - mongo_client_user
+      - mongo_client_pass
+    depends_on:
+      - db
+      - server
   
 networks:
   backend-network:

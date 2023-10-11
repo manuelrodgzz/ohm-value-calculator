@@ -2,8 +2,9 @@
   "name": "ohm-value-calculator",
   "private": true,
   "scripts": {
-    "dev": "docker compose -f compose.yaml -f compose.dev.yaml up --build -V",
-    "start": "docker compose -f compose.yaml up --build"
+    "dev": "docker compose -f compose.yaml -f compose.dev.yaml up --build -V client server db",
+    "start": "docker compose -f compose.yaml up --build client server db",
+    "test": "docker compose up --build server db server-test --abort-on-container-exit"
   },
   "workspaces": ["*"]
 }

@@ -1,5 +1,7 @@
 const fs = require('fs')
 
+console.log('Running populateDb.js file')
+
 const DOCUMENTS = [
   {
     color: 'black',
@@ -106,6 +108,8 @@ db.getSiblingDB('admin').auth(
   process.env.MONGO_INITDB_ROOT_USERNAME,
   process.env.MONGO_INITDB_ROOT_PASSWORD
 )
+
+console.log('hereeeeee',CLIENT_USER, CLIENT_PASSWORD)
 
 const res = db.createUser(
   {
